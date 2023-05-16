@@ -52,8 +52,18 @@ public class AtualizaResumoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 aula.setResumo(txtResumo.getText().toString());
                 Call<Aula> call = aulaService.putAula(id,aula);
-                Intent i = new Intent(AtualizaResumoActivity.this, ListaAulasActivity.class);
-                startActivity(i);
+                call.enqueue(new Callback<Aula>() {
+                    @Override
+                    public void onResponse(Call<Aula> call, Response<Aula> response) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Aula> call, Throwable t) {
+
+                    }
+                });
+                finish();
             }
         });
     }
